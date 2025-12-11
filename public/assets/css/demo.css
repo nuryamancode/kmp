@@ -37,6 +37,10 @@
 /*
 * Content
 ******************************************************************************/
+#layout-navbar {
+    z-index: 1 !important;
+}
+
 
 .demo-blocks > * {
   display: block !important;

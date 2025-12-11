@@ -46,16 +46,16 @@
                     <li>
                         <a class="dropdown-item" href="#">
                             <i class="bx bx-user me-2"></i>
-                            <span class="align-middle">My Profile</span>
+                            <span class="align-middle">Profil Saya</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a class="dropdown-item" href="#">
                             <i class="bx bx-cog me-2"></i>
                             <span class="align-middle">Settings</span>
                         </a>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{-- <li>
                         <a class="dropdown-item" href="#">
                             <span class="d-flex align-items-center align-middle">
                                 <i class="shrink-0 bx bx-credit-card me-2"></i>
@@ -64,14 +64,14 @@
                                     class="shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
                             </span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="auth-login-basic.html">
+                        <a class="dropdown-item" href="{{ route('logout') }}">
                             <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle">Log Out</span>
+                            <span class="align-middle">Keluar</span>
                         </a>
                     </li>
                 </ul>

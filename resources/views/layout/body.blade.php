@@ -20,6 +20,7 @@
 
                     <div class="container-xxl grow container-p-y">
                         @yield('content')
+                        @stack('modals')
                     </div>
 
                     @include('layout.foot')
