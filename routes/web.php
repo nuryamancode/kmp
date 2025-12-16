@@ -9,6 +9,7 @@ use App\Http\Controllers\Menu\StandardizationController;
 use App\Http\Controllers\Menu\TypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\ActivityLogController;
 
 // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -17,7 +18,6 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/', [Authentice::class, 'showLoginForm'])->name('login');
     Route::get('/login', [Authentice::class, 'showLoginForm'])->name('login');
     Route::post('/login', [Authentice::class, 'store'])->name('login.store');
-
 });
 
 
@@ -37,7 +37,6 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('divisi')->name('divisi.')->group(function () {
             Route::resource('', DivisionController::class)->parameters(['' => 'divisi']);
         });
-
     });
 
 
@@ -74,10 +73,9 @@ Route::middleware(['auth'])->group(function () {
                         ->parameters(['' => 'standarisasi']);
                 });
             });
-
         });
-
     });
-
+    // Activity Log Route
+    Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
     // ============== END STAFF & PETUGAS ==============
 });

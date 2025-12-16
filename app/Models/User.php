@@ -6,11 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;  // Tambahkan ini
+use OwenIt\Auditing\Auditable as AuditableTrait;  // Tambahkan ini
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, AuditableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -48,6 +50,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-
 }

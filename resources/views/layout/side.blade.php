@@ -1,5 +1,5 @@
 @php
-    $role = auth()->user()->role;
+$role = auth()->user()->role;
 @endphp
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -73,61 +73,61 @@
 
 
         @if (in_array($role, [0, 3])) {{-- Admin dan Kepala Seksi --}}
-            <li class="menu-item {{ request()->is('divisi*') ? 'active' : '' }}">
-                <a href="{{ route('divisi.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">Divisi</div>
-                </a>
-            </li>
-            <li class="menu-item {{ request()->is('kelolauser*') ? 'active' : '' }}">
-                <a href="{{ route('kelolauser.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">Kelola User</div>
-                </a>
-            </li>
-            <li class="menu-item {{ request()->is('backup*') ? 'active' : '' }}">
-                <a href="index.html" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">Backup Sistem</div>
-                </a>
-            </li>
+        <li class="menu-item {{ request()->is('divisi*') ? 'active' : '' }}">
+            <a href="{{ route('divisi.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Divisi</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is('kelolauser*') ? 'active' : '' }}">
+            <a href="{{ route('kelolauser.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Kelola User</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is('backup*') ? 'active' : '' }}">
+            <a href="index.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Backup Sistem</div>
+            </a>
+        </li>
         @endif
 
         @if (in_array($role, [1, 2])) {{-- Staff dan Petugas Arsip --}}
-            <li class="menu-item {{ request()->is('arsip*') ? 'active' : '' }}">
-                <a href="{{ route('arsip.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">Arsip</div>
-                </a>
-            </li>
+        <li class="menu-item {{ request()->is('arsip*') ? 'active' : '' }}">
+            <a href="{{ route('arsip.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Arsip</div>
+            </a>
+        </li>
         @endif
 
         @if ($role !== 2) {{-- Tanpaa Petugas Arsip --}}
-            <li class="menu-item {{ request()->is('laporan*') ? 'active' : '' }}">
-                <a href="index.html" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">Laporan</div>
-                </a>
-            </li>
+        <li class="menu-item {{ request()->is('laporan*') ? 'active' : '' }}">
+            <a href="index.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Laporan</div>
+            </a>
+        </li>
         @endif
 
 
         @if (!in_array($role, [1, 2])) {{-- Bukan Staff dan Petugas Arsip --}}
-            <li class="menu-item {{ request()->is('statistik*') ? 'active' : '' }}">
-                <a href="index.html" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">Statistik</div>
-                </a>
-            </li>
+        <li class="menu-item {{ request()->is('statistik*') ? 'active' : '' }}">
+            <a href="index.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Statistik</div>
+            </a>
+        </li>
         @endif
 
         @if (!in_array($role, [4, 2])) {{-- Bukan Kepala Seksi dan Petugas Arsip --}}
-            <li class="menu-item {{ request()->is('activity-log*') ? 'active' : '' }}">
-                <a href="index.html" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">Activity Log</div>
-                </a>
-            </li>
+        <li class="menu-item {{ request()->is('activity-log*') ? 'active' : '' }}">
+            <a href="{{ route('activity-log.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Activity Log</div>
+            </a>
+        </li>
         @endif
 
     </ul>
