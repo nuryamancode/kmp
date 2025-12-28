@@ -9,6 +9,12 @@ use App\Models\Standardization;
 use App\Models\Division;
 use App\Models\Archive;
 use App\Models\Document;
+use App\Models\BeritaAcaraKesepakatan;
+use App\Models\PersetujuanPemilikTanah;
+use App\Models\ValidasiSetelahMusyawarah;
+use App\Models\PembayaranGantiRugiPerbidang;
+use App\Models\BeritaAcaraUangGantiRugi;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ArchiveController extends Controller
@@ -66,7 +72,29 @@ class ArchiveController extends Controller
             'type_id' => $validatedData['archive_type'],
             'title' => $validatedData['title'],
             'date' => $validatedData['archive_date'],
+            'jenis_ba' => $request->jenis_ba
         ]);
+
+
+        // ================= DETAIL BERITA ACARA =================
+
+        // ================= DETAIL BERDASARKAN JENIS =================
+        match ($request->jenis_ba) {
+            'bak' => $archive->beritaAcaraKesepakatan()
+                ->create($request->bak),
+
+            'ppt' => $archive->persetujuanPemilikTanah()
+                ->create($request->ppt),
+
+            'validasi' => $archive->validasiSetelahMusyawarah()
+                ->create($request->validasi),
+
+            'pgr' => $archive->pembayaranGantiRugiPerbidang()
+                ->create($request->pgr),
+
+            'ba_ugr' => $archive->beritaAcaraUangGantiRugi()
+                ->create($request->ba_ugr),
+        };
 
         // Menyimpan file jika ada
         if ($request->hasFile('files')) {
@@ -86,7 +114,17 @@ class ArchiveController extends Controller
 
     public function show($id)
     {
-        $archive = Archive::with(['division', 'type', 'standardization'])->findOrFail($id);
+        $archive = Archive::with([
+            'division',
+            'type.category',
+            'standardization',
+            'documents',
+            'beritaAcaraKesepakatan',
+            'persetujuanPemilikTanah',
+            'validasiSetelahMusyawarah',
+            'pembayaranGantiRugiPerbidang',
+            'beritaAcaraUangGantiRugi',
+        ])->findOrFail($id);
 
         $data = [
             'title' => 'Detail Arsip',
@@ -132,37 +170,66 @@ class ArchiveController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi data
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'division' => 'required|exists:divisions,id',
-            'archive_type' => 'required|exists:types,id',
-            'standardization' => 'required|exists:standardizations,id',
-            'archive_date' => 'required|date',
-            'files' => 'nullable|array',
-        ]);
+        DB::transaction(function () use ($request, $id) {
 
-        // Cari arsip yang akan diupdate
-        $archive = Archive::findOrFail($id);
-        $archive->update([
-            'title' => $validatedData['title'],
-            'division_id' => $validatedData['division'],
-            'type_id' => $validatedData['archive_type'],
-            'standardization_id' => $validatedData['standardization'],
-            'date' => $validatedData['archive_date'],
-        ]);
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'division' => 'required|exists:divisions,id',
+                'archive_type' => 'required|exists:types,id',
+                'standardization' => 'required|exists:standardizations,id',
+                'archive_date' => 'required|date',
+                'files' => 'nullable|array',
+            ]);
 
-        // Menyimpan file baru jika ada
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
-                $filePath = $file->storeAs('documents', $file->getClientOriginalName());
-                Document::create([
-                    'archive_id' => $archive->id,
-                    'title' => $file->getClientOriginalName(),
-                    'file_path' => $filePath,
-                ]);
+            $archive = Archive::findOrFail($id);
+
+            // ================= UPDATE ARSIP =================
+            $archive->update([
+                'title' => $validatedData['title'],
+                'division_id' => $validatedData['division'],
+                'type_id' => $validatedData['archive_type'],
+                'standardization_id' => $validatedData['standardization'],
+                'date' => $validatedData['archive_date'],
+                'jenis_ba' => $request->jenis_ba
+            ]);
+
+            // ================= HAPUS DETAIL LAMA =================
+            $archive->beritaAcaraKesepakatan()?->delete();
+            $archive->persetujuanPemilikTanah()?->delete();
+            $archive->validasiSetelahMusyawarah()?->delete();
+            $archive->pembayaranGantiRugiPerbidang()?->delete();
+            $archive->beritaAcaraUangGantiRugi()?->delete();
+
+            // ================= SIMPAN DETAIL BARU =================
+            match ($request->jenis_ba) {
+                'bak' => $archive->beritaAcaraKesepakatan()
+                    ->create($request->bak),
+
+                'ppt' => $archive->persetujuanPemilikTanah()
+                    ->create($request->ppt),
+
+                'validasi' => $archive->validasiSetelahMusyawarah()
+                    ->create($request->validasi),
+
+                'pgr' => $archive->pembayaranGantiRugiPerbidang()
+                    ->create($request->pgr),
+
+                'ba_ugr' => $archive->beritaAcaraUangGantiRugi()
+                    ->create($request->ba_ugr),
+            };
+
+            // ================= FILE =================
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $filePath = $file->store('documents');
+                    Document::create([
+                        'archive_id' => $archive->id,
+                        'title' => $file->getClientOriginalName(),
+                        'file_path' => $filePath,
+                    ]);
+                }
             }
-        }
+        });
 
         return redirect()->route('arsip.index')->with('success', 'Arsip berhasil diperbarui.');
     }

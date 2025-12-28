@@ -20,7 +20,8 @@ class Archive extends Model implements Auditable
         'type_id',
         'title',
         'description',
-        'date'
+        'date',
+        'jenis_ba',
     ];
 
     // Relasi dengan tabel Standardization
@@ -45,5 +46,30 @@ class Archive extends Model implements Auditable
     public function documents()
     {
         return $this->hasMany(Document::class);
+    }
+
+    public function beritaAcaraKesepakatan()
+    {
+        return $this->hasOne(BeritaAcaraKesepakatan::class);
+    }
+
+    public function persetujuanPemilikTanah()
+    {
+        return $this->hasOne(PersetujuanPemilikTanah::class);
+    }
+
+    public function validasiSetelahMusyawarah()
+    {
+        return $this->hasOne(ValidasiSetelahMusyawarah::class);
+    }
+
+    public function pembayaranGantiRugiPerbidang()
+    {
+        return $this->hasOne(PembayaranGantiRugiPerbidang::class);
+    }
+
+    public function beritaAcaraUangGantiRugi()
+    {
+        return $this->hasOne(BeritaAcaraUangGantiRugi::class);
     }
 }
