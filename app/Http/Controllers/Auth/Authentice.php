@@ -9,7 +9,10 @@ class Authentice extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.signin');
+        $data = [
+            'title' => 'Masuk',
+        ];
+        return view('auth.signin', $data);
     }
 
     public function store(Request $request)

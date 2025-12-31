@@ -1,3 +1,12 @@
+@php
+    $role = [
+        0 => 'Admin',
+        1 => 'Staff Arsip',
+        2 => 'Petugas Arsip',
+        3 => 'Kepala Subseksi',
+        4 => 'Kepala Seksi',
+    ];
+@endphp
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
     id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
@@ -13,15 +22,15 @@
                 <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
                     aria-label="Search..." />
             </div> --}}
-            <h4 class="fw-bold py-3">KMP BPN</h4>
+            <h4 class="fw-bold py-3">{{ $title }}</h4>
         </div>
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
 
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                    <div class="avatar ">
+                        <img src="{{ asset('assets/img/avatars/5.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -29,14 +38,14 @@
                         <a class="dropdown-item" href="#">
                             <div class="d-flex">
                                 <div class="shrink-0 me-3">
-                                    <div class="avatar avatar-online">
-                                        <img src="../assets/img/avatars/1.png" alt
+                                    <div class="avatar">
+                                        <img src="{{ asset('assets/img/avatars/5.jpg') }}" alt
                                             class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </div>
                                 <div class="grow">
-                                    <span class="fw-semibold d-block">John Doe</span>
-                                    <small class="text-muted">Admin</small>
+                                    <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                                    <small class="text-muted">{{ $role[Auth::user()->role] }}</small>
                                 </div>
                             </div>
                         </a>
@@ -45,9 +54,11 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="bx bx-user me-2"></i>
-                            <span class="align-middle">Profil Saya</span>
+                        <a class="dropdown-item" href="{{ route('profil.index') }}">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <i class="bx bx-user me-2"></i>
+                                <span class="align-middle">Profil Saya</span>
+                            </div>
                         </a>
                     </li>
                     {{-- <li>
@@ -70,9 +81,12 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#LogoutModal">
-                            <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle">Keluar</span>
+                        <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                            data-bs-target="#LogoutModal">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <i class='bx  bx-arrow-out-right-stroke-circle-half me-2'></i>
+                                <span class="align-middle">Keluar</span>
+                            </div>
                         </a>
                     </li>
                 </ul>

@@ -58,7 +58,7 @@
                                     <i class="bx bx-edit-alt me-1"></i> Edit
                                 </a>
                                 <a class="dropdown-item" href="{{ route('arsip.show', $archive->id) }}">
-                                    <i class="bx bx-show me-1"></i> Lihat Arsip
+                                    <i class='bx  bx-eye-alt me-1'></i> Lihat Arsip
                                 </a>
                                 <!-- Form untuk menghapus arsip -->
                                 <form action="{{ route('arsip.destroy', $archive->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Yakin ingin menghapus arsip ini?');">

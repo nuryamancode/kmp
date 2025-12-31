@@ -1,4 +1,4 @@
-@extends('auth.body', ['title' => 'Masuk | KMP BPN'])
+@extends('auth.body', ['title' => $title])
 
 @section('content')
   <p class="mb-4">Silahkan login untuk melanjutkan</p>
@@ -45,7 +45,7 @@
 
   <p class="text-center">
     <span>Ada Kendala Masuk?</span>
-    <a href="auth-register-basic.html">
+    <a href="mailto:{{ env('MAIL_FROM_ADDRESS') }}">
       <span>Hubungi Kami</span>
     </a>
   </p>

@@ -9,12 +9,15 @@ class ActivityLogController extends Controller
 {
     public function index()
     {
-        // Ambil semua log aktivitas yang ada
-        $audits = Audit::latest()->paginate(10); // Bisa sesuaikan jumlah data yang ditampilkan
+        if (auth()->user()->role === 0) {
+            $audits = Audit::latest()->paginate(10);
+        } else{
+            $audits = Audit::whereHas('user', function ($query) {
+                $query->where('id', auth()->user()->id);
+            })->latest()->paginate(10);
+        }
 
-        // Tidak perlu json_decode lagi karena `old_values` dan `new_values` sudah berupa array
         foreach ($audits as $audit) {
-            // Pastikan old_values dan new_values sudah berupa array
             if (is_string($audit->old_values)) {
                 $audit->old_values = json_decode($audit->old_values, true);
             }
@@ -23,6 +26,12 @@ class ActivityLogController extends Controller
             }
         }
 
-        return view('page.activity-log.index', compact('audits')); // Kirim data ke view
+        $data = [
+            'title' => 'Activity Logs',
+            'menu' => 'Activity Logs',
+            'audits' => $audits
+        ];
+
+        return view('page.activity-log.index', $data); // Kirim data ke view
     }
 }

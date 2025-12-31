@@ -5,6 +5,7 @@ use App\Http\Controllers\Menu\ArchiveController;
 use App\Http\Controllers\Menu\CategoriesController;
 use App\Http\Controllers\Menu\DivisionController;
 use App\Http\Controllers\Menu\ManageUserController;
+use App\Http\Controllers\Menu\ProfilController;
 use App\Http\Controllers\Menu\StandardizationController;
 use App\Http\Controllers\Menu\TypeController;
 use Illuminate\Support\Facades\Route;
@@ -75,7 +76,15 @@ Route::middleware(['auth'])->group(function () {
             });
         });
     });
+    // ============== END STAFF & PETUGAS ============== 
+
     // Activity Log Route
     Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
-    // ============== END STAFF & PETUGAS ==============
+
+    // Profil Route
+    Route::prefix('profil')->name('profil.')->group(function () {
+        Route::get('', [ProfilController::class, 'index'])->name('index');
+        Route::put('/update', [ProfilController::class, 'update'])->name('update');
+        Route::put('/update-password', [ProfilController::class, 'updatePassword'])->name('update-password');
+    });
 });

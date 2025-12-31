@@ -4,7 +4,7 @@
         content="width=device-width, initial-scale=1.0,
                    user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Dashboard</title>
+    <title>{{ $title ?? config('app.name') }} - KMP BPN</title>
 
     <meta name="description" content="" />
 
@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
 
-    <link rel="stylesheet" href="{{ asset('/assets/vendor/fonts/boxicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/assets/vendor/fonts/basic/boxicons.min.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('/assets/vendor/css/core.css') }}" />
     <link rel="stylesheet" href="{{ asset('/assets/vendor/css/theme-default.css') }}" />
