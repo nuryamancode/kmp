@@ -56,21 +56,21 @@ class ArchiveController extends Controller
     {
         // Validasi data
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'division' => 'required|exists:divisions,id',
+            // 'title' => 'required|string|max:255',
+            // 'division' => 'required|exists:divisions,id',
             'archive_type' => 'required|exists:types,id',
-            'standardization' => 'required|exists:standardizations,id',
+            // 'standardization' => 'required|exists:standardizations,id',
             'archive_date' => 'required|date',
             'files' => 'nullable|array',
         ]);
 
         // Menyimpan data arsip
         $archive = Archive::create([
-            'standardization_id' => $validatedData['standardization'],
+            // 'standardization_id' => $validatedData['standardization'],
             'user_id' => auth()->id(), // Pastikan sudah login
-            'division_id' => $validatedData['division'],
+            // 'division_id' => $validatedData['division'],
             'type_id' => $validatedData['archive_type'],
-            'title' => $validatedData['title'],
+            // 'title' => $validatedData['title'],
             'date' => $validatedData['archive_date'],
             'jenis_ba' => $request->jenis_ba
         ]);
@@ -161,7 +161,7 @@ class ArchiveController extends Controller
             'subtitle' => 'Edit Arsip',
             'archive' => $archive,
             'types' => $types,
-            'standardizations' => $standardizations,
+            // 'standardizations' => $standardizations,
             'division' => $division,
         ];
 
@@ -174,9 +174,9 @@ class ArchiveController extends Controller
 
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
-                'division' => 'required|exists:divisions,id',
+                // 'division' => 'required|exists:divisions,id',
                 'archive_type' => 'required|exists:types,id',
-                'standardization' => 'required|exists:standardizations,id',
+                // 'standardization' => 'required|exists:standardizations,id',
                 'archive_date' => 'required|date',
                 'files' => 'nullable|array',
             ]);
@@ -186,9 +186,9 @@ class ArchiveController extends Controller
             // ================= UPDATE ARSIP =================
             $archive->update([
                 'title' => $validatedData['title'],
-                'division_id' => $validatedData['division'],
+                // 'division_id' => $validatedData['division'],
                 'type_id' => $validatedData['archive_type'],
-                'standardization_id' => $validatedData['standardization'],
+                // 'standardization_id' => $validatedData['standardization'],
                 'date' => $validatedData['archive_date'],
                 'jenis_ba' => $request->jenis_ba
             ]);

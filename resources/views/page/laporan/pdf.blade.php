@@ -34,10 +34,10 @@
             <tr>
                 <th>#</th>
                 <th>Judul</th>
-                <th>Divisi</th>
+                <!-- <th>Divisi</th> -->
                 <th>Kategori</th>
                 <th>Tipe</th>
-                <th>Standarisasi</th>
+                <!-- <th>Standarisasi</th> -->
                 <th>Tanggal Arsip</th>
                 <th>Jumlah Dokumen</th> <!-- Kolom untuk jumlah dokumen -->
             </tr>
@@ -46,11 +46,37 @@
             @foreach ($archives as $archive)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $archive->title }}</td>
-                <td>{{ $archive->division->name }}</td>
+                <td>
+                    @switch($archive->jenis_ba)
+                    @case('bak')
+                    Berita Acara Kesepakatan
+                    @break
+
+                    @case('ppt')
+                    Persetujuan Pemilik Tanah
+                    @break
+
+                    @case('validasi')
+                    Validasi Setelah Musyawarah
+                    @break
+
+                    @case('pgr')
+                    Pembayaran Ganti Rugi
+                    @break
+
+                    @case('ba_ugr')
+                    Berita Acara Uang Ganti Rugi
+                    @break
+
+                    @default
+                    -
+                    @endswitch
+                    <!-- {{ $archive->title ?? '' }} -->
+                </td>
+                <!-- <td>{{ $archive->division->name ?? '' }}</td> -->
                 <td>{{ $archive->type->category->name }}</td>
                 <td>{{ $archive->type->name }}</td>
-                <td>{{ $archive->standardization->name }}</td>
+                <!-- <td>{{ $archive->standardization->name ?? ''}}</td> -->
                 <td>{{ $archive->date }}</td>
                 <td>{{ $archive->documents_count }} dokumen</td> <!-- Menampilkan jumlah dokumen -->
             </tr>

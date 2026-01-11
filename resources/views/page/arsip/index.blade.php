@@ -31,11 +31,11 @@
             <thead class="table-dark">
                 <tr>
                     <th class="text-white">#</th>
-                    <th class="text-white">Judul</th>
-                    <th class="text-white">Divisi</th>
+                    <th class="text-white">Tipe Arsip</th>
+                    <!-- <th class="text-white">Divisi</th> -->
                     <th class="text-white">Kategori</th>
                     <th class="text-white">Tipe</th>
-                    <th class="text-white">Standarisasi</th>
+                    <!-- <th class="text-white">Standarisasi</th> -->
                     <th class="text-white">Tanggal Arsip</th>
                     <th class="text-white">Aksi</th>
                 </tr>
@@ -44,11 +44,37 @@
                 @foreach ($archives as $archive)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $archive->title }}</td>
-                    <td>{{ $archive->division->name }}</td>
+                    <td>
+                        @switch($archive->jenis_ba)
+                        @case('bak')
+                        Berita Acara Kesepakatan
+                        @break
+
+                        @case('ppt')
+                        Persetujuan Pemilik Tanah
+                        @break
+
+                        @case('validasi')
+                        Validasi Setelah Musyawarah
+                        @break
+
+                        @case('pgr')
+                        Pembayaran Ganti Rugi
+                        @break
+
+                        @case('ba_ugr')
+                        Berita Acara Uang Ganti Rugi
+                        @break
+
+                        @default
+                        -
+                        @endswitch
+                        <!-- {{ $archive->jenis_ba }} -->
+                    </td>
+                    <!-- <td>{{ $archive->division->name ?? '' }}</td> -->
                     <td>{{ $archive->type->category->name }}</td>
                     <td>{{ $archive->type->name }}</td>
-                    <td>{{ $archive->standardization->name }}</td>
+                    <!-- <td>{{ $archive->standardization->name ?? '' }}</td> -->
                     <td>{{ $archive->date }}</td>
                     <td>
                         <div class="dropdown">
