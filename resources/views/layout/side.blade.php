@@ -86,7 +86,7 @@ $role = auth()->user()->role;
             </a>
         </li>
         <li class="menu-item {{ request()->is('backup*') ? 'active' : '' }}">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('backup.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Backup Sistem</div>
             </a>
@@ -114,7 +114,7 @@ $role = auth()->user()->role;
 
         @if (!in_array($role, [1, 2])) {{-- Bukan Staff dan Petugas Arsip --}}
         <li class="menu-item {{ request()->is('statistik*') ? 'active' : '' }}">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('statistik.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Statistik</div>
             </a>
