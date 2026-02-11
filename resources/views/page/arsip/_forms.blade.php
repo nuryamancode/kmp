@@ -174,7 +174,7 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
 
 </div> <!-- accordion -->
 
-<!-- <div class="mb-3">
+{{-- <div class="mb-3">
     <label class="form-label" for="title">Judul Arsip</label>
     <div class="input-group input-group-merge">
         <span id="name-addon" class="input-group-text">
@@ -186,10 +186,9 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
     @error('title')
     <small class="text-danger">{{ $message }}</small>
     @enderror
-</div> -->
+</div>  --}}
 
-<!-- Divisi -->
-<!-- <div class="mb-3">
+{{-- <div class="mb-3">
     <label class="form-label" for="division">Divisi</label>
     <select id="division" name="division" class="form-select">
         @foreach ($division as $div)
@@ -202,7 +201,7 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
     @error('division')
     <small class="text-danger">{{ $message }}</small>
     @enderror
-</div> -->
+</div>  --}}
 
 
 <!-- Tipe Arsip -->
@@ -221,8 +220,7 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
     @enderror
 </div>
 
-<!-- Standarisasi
-<div class="mb-3">
+{{-- <div class="mb-3">
     <label class="form-label" for="standardization">Standarisasi</label>
     <select id="standardization" name="standardization" class="form-select">
         @foreach ($standardizations as $standardization)
@@ -235,7 +233,7 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
     @error('standardization')
     <small class="text-danger">{{ $message }}</small>
     @enderror
-</div> -->
+</div> --}}
 
 <!-- Tanggal Arsip -->
 <div class="mb-3">

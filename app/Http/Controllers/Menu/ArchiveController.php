@@ -99,7 +99,8 @@ class ArchiveController extends Controller
         // Menyimpan file jika ada
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $filePath = $file->storeAs('documents', $file->getClientOriginalName());
+                $filePath = $file->storeAs('documents', $file->getClientOriginalName(), 'public');
+
                 Document::create([
                     'archive_id' => $archive->id,
                     'title' => $file->getClientOriginalName(),
