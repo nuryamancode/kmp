@@ -174,7 +174,7 @@ class ArchiveController extends Controller
         DB::transaction(function () use ($request, $id) {
 
             $validatedData = $request->validate([
-                'title' => 'required|string|max:255',
+                // 'title' => 'required|string|max:255',
                 // 'division' => 'required|exists:divisions,id',
                 'archive_type' => 'required|exists:types,id',
                 // 'standardization' => 'required|exists:standardizations,id',
@@ -186,7 +186,7 @@ class ArchiveController extends Controller
 
             // ================= UPDATE ARSIP =================
             $archive->update([
-                'title' => $validatedData['title'],
+                // 'title' => $validatedData['title'],
                 // 'division_id' => $validatedData['division'],
                 'type_id' => $validatedData['archive_type'],
                 // 'standardization_id' => $validatedData['standardization'],

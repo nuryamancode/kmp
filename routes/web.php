@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     // ============== ADMIN & KEPALA SUBSKSI ==============
-    Route::middleware(['permission:admin,kepsubseksi'])->group(function () {
+    Route::middleware(['permission:admin,kepsubseksi,kepseksi'])->group(function () {
 
         Route::prefix('kelolauser')->name('kelolauser.')->group(function () {
             Route::resource('', ManageUserController::class)->parameters(['' => 'user']);

@@ -73,12 +73,12 @@ $role = auth()->user()->role;
 
 
         @if (in_array($role, [0, 3])) {{-- Admin dan Kepala Seksi --}}
-        <li class="menu-item {{ request()->is('divisi*') ? 'active' : '' }}">
+        <!-- <li class="menu-item {{ request()->is('divisi*') ? 'active' : '' }}">
             <a href="{{ route('divisi.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Divisi</div>
             </a>
-        </li>
+        </li> -->
         <li class="menu-item {{ request()->is('kelolauser*') ? 'active' : '' }}">
             <a href="{{ route('kelolauser.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
