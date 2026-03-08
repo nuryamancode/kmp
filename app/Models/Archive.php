@@ -24,18 +24,6 @@ class Archive extends Model implements Auditable
         'jenis_ba',
     ];
 
-    // Relasi dengan tabel Standardization
-    public function standardization()
-    {
-        return $this->belongsTo(Standardization::class);
-    }
-
-    // Relasi dengan tabel Division
-    public function division()
-    {
-        return $this->belongsTo(Division::class);
-    }
-
     // Relasi dengan tabel Type
     public function type()
     {

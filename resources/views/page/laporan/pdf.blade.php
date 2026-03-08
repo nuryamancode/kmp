@@ -34,7 +34,6 @@
             <tr>
                 <th>#</th>
                 <th>Judul</th>
-                <!-- <th>Divisi</th> -->
                 <th>Kategori</th>
                 <th>Tipe</th>
                 <!-- <th>Standarisasi</th> -->
@@ -73,7 +72,6 @@
                     @endswitch
                     <!-- {{ $archive->title ?? '' }} -->
                 </td>
-                <!-- <td>{{ $archive->division->name ?? '' }}</td> -->
                 <td>{{ $archive->type->category->name }}</td>
                 <td>{{ $archive->type->name }}</td>
                 <!-- <td>{{ $archive->standardization->name ?? ''}}</td> -->

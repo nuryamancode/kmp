@@ -20,13 +20,6 @@
             Tipe
         </a>
     </li>
-
-    <!-- <li class="nav-item">
-            <a class="nav-link {{ $active === 'standarisasi' ? 'active' : '' }}"
-                href="{{ route('arsip.standarisasi.index') }}">
-                Standarisasi
-            </a>
-        </li> -->
 </ul>
 
 @endif

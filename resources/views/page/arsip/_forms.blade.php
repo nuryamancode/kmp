@@ -42,7 +42,7 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
             value="{{ old('bak.nomor_kesepakatan', $archives->beritaAcaraKesepakatan->nomor_kesepakatan ?? '') }}">
 
         <input type="date" name="bak[tanggal_kesepakatan]" class="form-control mb-2"
-            value="{{ old('bak.tanggal_kesepakatan', $archives->beritaAcaraKesepakatan->tanggal_kesepakatan ?? '') }}">
+            value="{{ old('bak.tanggal_kesepakatan', isset($archives->beritaAcaraKesepakatan->tanggal_kesepakatan) ? $archives->beritaAcaraKesepakatan->tanggal_kesepakatan->format('Y-m-d') : '') }}">
 
         <input type="text" name="bak[desa]" class="form-control mb-2" placeholder="Desa"
             value="{{ old('bak.desa', $archives->beritaAcaraKesepakatan->desa ?? '') }}">
@@ -94,7 +94,7 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
         <input type="text" name="validasi[nomor_validasi]" class="form-control mb-2" placeholder="Nomor Validasi"
             value="{{ old('validasi.nomor_validasi', $archives->ValidasiSetelahMusyawarah->nomor_validasi ?? '') }}">
         <input type="date" name="validasi[tanggal_validasi]" class="form-control mb-2"
-            value="{{ old('validasi.tanggal_validasi', $archives->ValidasiSetelahMusyawarah->tanggal_validasi ?? '') }}">
+            value="{{ old('validasi.tanggal_validasi', isset($archives->ValidasiSetelahMusyawarah->tanggal_validasi) ? date('Y-m-d', strtotime($archives->ValidasiSetelahMusyawarah->tanggal_validasi)) : '') }}">
 
         <input type="text" name="validasi[desa]" class="form-control mb-2" placeholder="Desa"
             value="{{ old('validasi.desa', $archives->ValidasiSetelahMusyawarah->desa ?? '') }}">
@@ -151,12 +151,12 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
             value="{{ old('ba_ugr.nomor_berita_acara_ugr', $archives->BeritaAcaraUangGantiRugi->nomor_berita_acara_ugr ?? '') }}">
 
         <input type="date" name="ba_ugr[tanggal_ugr]" class="form-control mb-2"
-            value="{{ old('ba_ugr.tanggal_ugr', $archives->BeritaAcaraUangGantiRugi->tanggal_ugr ?? '') }}">
+            value="{{ old('ba_ugr.tanggal_ugr', isset($archives->BeritaAcaraUangGantiRugi->tanggal_ugr) ? \Carbon\Carbon::parse($archives->BeritaAcaraUangGantiRugi->tanggal_ugr)->format('Y-m-d') : '') }}">
 
         <input type="text" name="ba_ugr[nomor_validasi]" class="form-control mb-2" placeholder="Nomor Validasi"
             value="{{ old('ba_ugr.nomor_validasi', $archives->BeritaAcaraUangGantiRugi->nomor_validasi ?? '') }}">
         <input type="date" name="ba_ugr[tanggal_validasi]" class="form-control mb-2"
-            value="{{ old('ba_ugr.tanggal_validasi', $archives->BeritaAcaraUangGantiRugi->tanggal_validasi ?? '') }}">
+            value="{{ old('ba_ugr.tanggal_validasi', isset($archives->BeritaAcaraUangGantiRugi->tanggal_validasi) ? \Carbon\Carbon::parse($archives->BeritaAcaraUangGantiRugi->tanggal_validasi)->format('Y-m-d') : '') }}">
         <input type="text" name="ba_ugr[desa]" class="form-control mb-2" placeholder="Desa"
             value="{{ old('ba_ugr.desa', $archives->BeritaAcaraUangGantiRugi->desa ?? '') }}">
         <input type="text" name="ba_ugr[kecamatan]" class="form-control mb-2" placeholder="Kecamatan"
@@ -182,26 +182,26 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
         </span>
         <input type="text" id="title" name="title" class="form-control" placeholder="Judul Arsip"
             aria-describedby="title-addon" value="{{ old('title', $archives->title ?? '') }}">
-    </div>
-    @error('title')
-    <small class="text-danger">{{ $message }}</small>
-    @enderror
-</div>  --}}
+</div>
+@error('title')
+<small class="text-danger">{{ $message }}</small>
+@enderror
+</div> --}}
 
 {{-- <div class="mb-3">
     <label class="form-label" for="division">Divisi</label>
     <select id="division" name="division" class="form-select">
         @foreach ($division as $div)
         <option value="{{ $div->id }}"
-            {{ old('division', $archives->division_id ?? '') == $div->id ? 'selected' : '' }}>
-            {{ $div->name }}
-        </option>
-        @endforeach
-    </select>
-    @error('division')
-    <small class="text-danger">{{ $message }}</small>
-    @enderror
-</div>  --}}
+{{ old('division', $archives->division_id ?? '') == $div->id ? 'selected' : '' }}>
+{{ $div->name }}
+</option>
+@endforeach
+</select>
+@error('division')
+<small class="text-danger">{{ $message }}</small>
+@enderror
+</div> --}}
 
 
 <!-- Tipe Arsip -->
@@ -225,14 +225,14 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
     <select id="standardization" name="standardization" class="form-select">
         @foreach ($standardizations as $standardization)
         <option value="{{ $standardization->id }}"
-            {{ old('standardization', $archives->standardization ?? '') == $standardization->id ? 'selected' : '' }}>
-            {{ $standardization->name }}
-        </option>
-        @endforeach
-    </select>
-    @error('standardization')
-    <small class="text-danger">{{ $message }}</small>
-    @enderror
+{{ old('standardization', $archives->standardization ?? '') == $standardization->id ? 'selected' : '' }}>
+{{ $standardization->name }}
+</option>
+@endforeach
+</select>
+@error('standardization')
+<small class="text-danger">{{ $message }}</small>
+@enderror
 </div> --}}
 
 <!-- Tanggal Arsip -->
@@ -245,16 +245,38 @@ $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
     @enderror
 </div>
 
-<!-- Upload File -->
 <div class="mb-3">
-    <label class="form-label" for="files">Upload File</label>
+    <label class="form-label" for="files">Upload File Baru</label>
+    @if(isset($archives) && $archives->exists)
+    <small class="text-warning d-block mb-2">
+        *Mengunggah file baru akan menggantikan (menghapus) semua file lama.
+    </small>
+    @endif
+    @if(isset($archives) && $archives->documents->count() > 0)
+    <div class="existing-files mb-3">
+        <p class="text-muted mb-2"><i class='bx bx-paperclip'></i> File yang sudah diupload:</p>
+        <ul class="list-group">
+            @foreach($archives->documents as $doc)
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <i class='bx bxs-file-pdf me-2 text-danger'></i> <span>{{ $doc->title }}</span>
+                </div>
+                <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                    Lihat File
+                </a>
+            </li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <input type="file" id="files" name="files[]" class="form-control" multiple>
     @error('files')
     <small class="text-danger">{{ $message }}</small>
     @enderror
-    <!-- Drag and Drop Area -->
-    <div class="file-drop-area" id="drop-area" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
-        <p>Drag & Drop files here or click to select files</p>
+
+    <div class="file-drop-area mt-2" id="drop-area" style="border: 2px dashed #ccc; padding: 20px; text-align: center; cursor: pointer;">
+        <p class="mb-0">Drag & Drop file baru di sini atau klik untuk memilih</p>
     </div>
 </div>
 

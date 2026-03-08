@@ -101,7 +101,6 @@
 
 @push('styles')
 <style>
-    /* Style Highlight Hijau */
     .kmp-highlight {
         background-color: #28a745 !important;
         color: white !important;

@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Menu;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type;
-use App\Models\Standardization;
-use App\Models\Division;
 use App\Models\Archive;
 use App\Models\Document;
 use App\Models\BeritaAcaraKesepakatan;
@@ -22,7 +20,7 @@ class ArchiveController extends Controller
     public function index()
     {
         // Mengambil data arsip beserta relasinya
-        $archives = Archive::with(['division', 'type', 'standardization'])->get();
+        $archives = Archive::with(['type'])->get();
 
         $data = [
             'title' => 'Arsip',
@@ -37,15 +35,11 @@ class ArchiveController extends Controller
     public function create()
     {
         $types = Type::all();
-        $standardizations = Standardization::all();
-        $division = Division::all();
 
         $data = [
             'title' => 'Tambah Arsip',
             'subtitle' => 'Tambah Arsip Baru',
             'types' => $types,
-            'standardizations' => $standardizations,
-            'division' => $division,
         ];
 
         return view('page.arsip.create', $data);
@@ -57,18 +51,14 @@ class ArchiveController extends Controller
         // Validasi data
         $validatedData = $request->validate([
             // 'title' => 'required|string|max:255',
-            // 'division' => 'required|exists:divisions,id',
             'archive_type' => 'required|exists:types,id',
-            // 'standardization' => 'required|exists:standardizations,id',
             'archive_date' => 'required|date',
             'files' => 'nullable|array',
         ]);
 
         // Menyimpan data arsip
         $archive = Archive::create([
-            // 'standardization_id' => $validatedData['standardization'],
             'user_id' => auth()->id(), // Pastikan sudah login
-            // 'division_id' => $validatedData['division'],
             'type_id' => $validatedData['archive_type'],
             // 'title' => $validatedData['title'],
             'date' => $validatedData['archive_date'],
@@ -116,9 +106,7 @@ class ArchiveController extends Controller
     public function show($id)
     {
         $archive = Archive::with([
-            'division',
             'type.category',
-            'standardization',
             'documents',
             'beritaAcaraKesepakatan',
             'persetujuanPemilikTanah',
@@ -152,18 +140,14 @@ class ArchiveController extends Controller
     public function edit($id)
     {
         // Ambil data arsip beserta relasi yang diperlukan
-        $archive = Archive::with(['division', 'type', 'standardization'])->findOrFail($id);
+        $archive = Archive::with(['type', 'documents'])->findOrFail($id);
         $types = Type::all();
-        $standardizations = Standardization::all();
-        $division = Division::all();
 
         $data = [
             'title' => 'Edit Arsip',
             'subtitle' => 'Edit Arsip',
             'archive' => $archive,
             'types' => $types,
-            // 'standardizations' => $standardizations,
-            'division' => $division,
         ];
 
         return view('page.arsip.update', $data); // Pastikan file view ada di page/arsip/edit.blade.php
@@ -175,9 +159,7 @@ class ArchiveController extends Controller
 
             $validatedData = $request->validate([
                 // 'title' => 'required|string|max:255',
-                // 'division' => 'required|exists:divisions,id',
                 'archive_type' => 'required|exists:types,id',
-                // 'standardization' => 'required|exists:standardizations,id',
                 'archive_date' => 'required|date',
                 'files' => 'nullable|array',
             ]);
@@ -187,9 +169,7 @@ class ArchiveController extends Controller
             // ================= UPDATE ARSIP =================
             $archive->update([
                 // 'title' => $validatedData['title'],
-                // 'division_id' => $validatedData['division'],
                 'type_id' => $validatedData['archive_type'],
-                // 'standardization_id' => $validatedData['standardization'],
                 'date' => $validatedData['archive_date'],
                 'jenis_ba' => $request->jenis_ba
             ]);
@@ -220,9 +200,24 @@ class ArchiveController extends Controller
             };
 
             // ================= FILE =================
+            // ================= FILE =================
             if ($request->hasFile('files')) {
+                // 1. Ambil semua dokumen lama terkait arsip ini
+                $oldDocuments = Document::where('archive_id', $archive->id)->get();
+
+                // 2. Hapus file fisik dari storage dan hapus record di database
+                foreach ($oldDocuments as $oldDoc) {
+                    if (Storage::disk('public')->exists($oldDoc->file_path)) {
+                        Storage::disk('public')->delete($oldDoc->file_path);
+                    }
+                    $oldDoc->delete(); // Hapus baris di tabel documents
+                }
+
+                // 3. Simpan file baru
                 foreach ($request->file('files') as $file) {
-                    $filePath = $file->store('documents');
+                    // Menggunakan storeAs agar nama file tetap asli (seperti di method store)
+                    $filePath = $file->storeAs('documents', $file->getClientOriginalName(), 'public');
+
                     Document::create([
                         'archive_id' => $archive->id,
                         'title' => $file->getClientOriginalName(),

@@ -3,10 +3,8 @@
 use App\Http\Controllers\Auth\Authentice;
 use App\Http\Controllers\Menu\ArchiveController;
 use App\Http\Controllers\Menu\CategoriesController;
-use App\Http\Controllers\Menu\DivisionController;
 use App\Http\Controllers\Menu\ManageUserController;
 use App\Http\Controllers\Menu\ProfilController;
-use App\Http\Controllers\Menu\StandardizationController;
 use App\Http\Controllers\Menu\TypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -36,10 +34,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('kelolauser')->name('kelolauser.')->group(function () {
             Route::resource('', ManageUserController::class)->parameters(['' => 'user']);
-        });
-
-        Route::prefix('divisi')->name('divisi.')->group(function () {
-            Route::resource('', DivisionController::class)->parameters(['' => 'divisi']);
         });
 
         Route::prefix('statistik')->name('statistik.')->group(function () {
@@ -79,13 +73,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::prefix('tipe')->name('tipe.')->group(function () {
                     Route::resource('', TypeController::class)
                         ->parameters(['' => 'tipe']);
-                });
-            });
-
-            Route::middleware('permission:staff')->group(function () {
-                Route::prefix('standarisasi')->name('standarisasi.')->group(function () {
-                    Route::resource('', StandardizationController::class)
-                        ->parameters(['' => 'standarisasi']);
                 });
             });
         });

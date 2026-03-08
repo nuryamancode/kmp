@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Type;
-use App\Models\Standardization;
-use App\Models\Division;
 use App\Models\Archive;
 use App\Models\Document;
 use App\Models\BeritaAcaraKesepakatan;
@@ -21,7 +19,7 @@ class LaporanController extends Controller
     public function index(Request $request)
     {
         // Menangani filter tanggal jika ada
-        $query = Archive::with(['division', 'type', 'standardization']);
+        $query = Archive::with(['type']);
 
         // Filter berdasarkan start_date dan end_date
         if ($request->has('start_date') && $request->has('end_date')) {
@@ -43,7 +41,7 @@ class LaporanController extends Controller
     public function exportPdf(Request $request)
     {
         // Menangani filter tanggal jika ada
-        $query = Archive::with(['division', 'type', 'standardization', 'documents']);
+        $query = Archive::with(['type', 'documents']);
 
         // Filter berdasarkan start_date dan end_date
         if ($request->has('start_date') && $request->has('end_date')) {

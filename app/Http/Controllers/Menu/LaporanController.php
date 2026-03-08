@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Menu;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type;
-use App\Models\Standardization;
-use App\Models\Division;
 use App\Models\Archive;
 use App\Models\Document;
 use App\Models\BeritaAcaraKesepakatan;
@@ -21,7 +19,7 @@ class LaporanController extends Controller
     public function index()
     {
         // Mengambil data Laporan beserta relasinya
-        $archives = Archive::with(['division', 'type', 'standardization'])->get();
+        $archives = Archive::with(['type'])->get();
 
         $data = [
             'title' => 'Laporan',

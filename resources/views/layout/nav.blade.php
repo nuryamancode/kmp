@@ -1,11 +1,11 @@
 @php
-    $role = [
-        0 => 'Admin',
-        1 => 'Staff Arsip',
-        2 => 'Petugas Arsip',
-        3 => 'Kepala Subseksi',
-        4 => 'Kepala Seksi',
-    ];
+$role = [
+0 => 'Admin',
+1 => 'Staff Arsip',
+2 => 'Petugas Arsip',
+3 => 'Kepala Subseksi',
+4 => 'Kepala Seksi',
+];
 @endphp
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
     id="layout-navbar">
